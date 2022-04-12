@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { getMovies, deleteMovie } from "../services/fakeMovieService";
 import Like from "./like";
+import Pagination from "./pagination";
 class Movies extends Component {
-  state = { movies: getMovies() };
+  state = { movies: getMovies(), pageSize: 4 };
 
   handleClick = (movie) => {
     const movies = [...this.state.movies];
@@ -10,6 +11,9 @@ class Movies extends Component {
     movies[index] = { ...movie };
     movies[index].liked = !movies[index].liked;
     this.setState({ movies });
+  };
+  handlePage = (page) => {
+    console.log(page);
   };
   render() {
     const count = this.state.movies.length;
@@ -58,6 +62,11 @@ class Movies extends Component {
             })}
           </tbody>
         </table>
+        <Pagination
+          totalItems={count}
+          pageSize={this.state.pageSize}
+          onPageChange={this.handlePage}
+        />
       </React.Fragment>
     );
   }
