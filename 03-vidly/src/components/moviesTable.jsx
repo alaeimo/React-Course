@@ -4,7 +4,7 @@ import TableHeader from "./common/tableHeader";
 import TableBody from "./common/tableBody";
 class MoviesTable extends Component {
   render() {
-    const { movies, onLike, onDelete, onSort } = this.props;
+    const { movies, onLike, onDelete, onSort, sortColumn } = this.props;
     const columns = [
       { path: "title", value: "Title" },
       { path: "genre.name", value: "Genre" },
@@ -31,7 +31,12 @@ class MoviesTable extends Component {
     ];
     return (
       <table className="table">
-        <TableHeader columns={columns} onSort={onSort} onDelete={onDelete} />
+        <TableHeader
+          columns={columns}
+          onSort={onSort}
+          onDelete={onDelete}
+          sortColumn={sortColumn}
+        />
         <TableBody columns={columns} data={movies} />
       </table>
     );
