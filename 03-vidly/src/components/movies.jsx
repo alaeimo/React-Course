@@ -3,7 +3,7 @@ import { getMovies, deleteMovie } from "../services/fakeMovieService";
 import Like from "./like";
 import Pagination from "./pagination";
 class Movies extends Component {
-  state = { movies: getMovies(), pageSize: 4 };
+  state = { movies: getMovies(), pageSize: 4, currentPage: 1 };
 
   handleClick = (movie) => {
     const movies = [...this.state.movies];
@@ -12,11 +12,13 @@ class Movies extends Component {
     movies[index].liked = !movies[index].liked;
     this.setState({ movies });
   };
-  handlePage = (page) => {
-    console.log(page);
+
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
   };
   render() {
     const count = this.state.movies.length;
+    const { pageSize, currentPage } = this.state;
     if (count === 0)
       return <p className="pt-5 bold">There are no movies in the database!</p>;
     return (
@@ -64,8 +66,9 @@ class Movies extends Component {
         </table>
         <Pagination
           totalItems={count}
-          pageSize={this.state.pageSize}
-          onPageChange={this.handlePage}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={this.handlePageChange}
         />
       </React.Fragment>
     );
