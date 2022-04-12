@@ -32,7 +32,7 @@ class MoviesTable extends Component {
     return (
       <table className="table">
         <TableHeader columns={columns} onSort={onSort} onDelete={onDelete} />
-        <TableBody data={movies} columns={columns} />
+        <TableBody columns={columns} data={movies} />
       </table>
     );
   }
