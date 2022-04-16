@@ -6,6 +6,7 @@ import Rentals from "./components/rentals";
 import NotFound from "./components/notfound";
 import { Route, Routes } from "react-router-dom";
 import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
 import "./App.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <main className="container">
       <NavBar />
       <Routes>
+        <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/movies/:id" element={<Movie />} />
         <Route path="/movies" element={<Movies />} />
