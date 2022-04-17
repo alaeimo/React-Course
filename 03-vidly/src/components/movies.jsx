@@ -6,6 +6,7 @@ import ListGroup from "./common/listGroup";
 import { paginate } from "../utils/paginate";
 import MoviesTable from "./moviesTable";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 class Movies extends Component {
   state = {
     movies: [],
@@ -69,7 +70,6 @@ class Movies extends Component {
       selectedGenre,
       sortColumn,
     } = this.state;
-
     const { count, movies } = this.getPagedData();
     if (count === 0)
       return <p className="pt-5 h4">There are no movies in the database!</p>;
@@ -84,7 +84,10 @@ class Movies extends Component {
             />
           </div>
           <div className="col-9">
-            <p className="pt-5 h4">Showing {count} movies in the database</p>
+            <Link to="/movies/new" className="btn btn-primary mt-5 mb-2">
+              New Movie
+            </Link>
+            <p className="h4">Showing {count} movies in the database</p>
             <MoviesTable
               movies={movies}
               sortColumn={sortColumn}
