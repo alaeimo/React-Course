@@ -7,6 +7,17 @@ const NavBar = () => {
       <Link to="/" className="navbar-brand">
         Vidly
       </Link>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon" id="navbarNav"></span>
+      </button>
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav">
           <NavLink className="nav-item nav-link" to="/movies">
