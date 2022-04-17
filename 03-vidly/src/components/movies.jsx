@@ -7,6 +7,7 @@ import { paginate } from "../utils/paginate";
 import MoviesTable from "./moviesTable";
 import _ from "lodash";
 import { Link } from "react-router-dom";
+import SearchBox from "./common/searchBox";
 class Movies extends Component {
   state = {
     movies: [],
@@ -14,6 +15,7 @@ class Movies extends Component {
     selectedGenre: null,
     pageSize: 4,
     currentPage: 1,
+    searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
   };
 
@@ -34,24 +36,34 @@ class Movies extends Component {
   };
 
   handleGenreSelect = (genre) => {
-    this.setState({ selectedGenre: genre, currentPage: 1 });
+    this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
   };
 
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
+  handleSearch = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1, selectedGenre: null });
+  };
   getPagedData = () => {
     const {
       pageSize,
       currentPage,
       movies: allMovies,
       selectedGenre,
+      searchQuery,
       sortColumn,
     } = this.state;
     let filteredMovies = selectedGenre
       ? allMovies.filter((movie) => movie.genre._id === selectedGenre._id)
       : allMovies;
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filteredMovies = filteredMovies.filter((m) =>
+        m.title.toLowerCase().startsWith(query)
+      );
+    }
     const sortedMovies = _.orderBy(
       filteredMovies,
       [sortColumn.path],
@@ -71,8 +83,6 @@ class Movies extends Component {
       sortColumn,
     } = this.state;
     const { count, movies } = this.getPagedData();
-    if (count === 0)
-      return <p className="pt-5 h4">There are no movies in the database!</p>;
     return (
       <React.Fragment>
         <div className="row">
@@ -87,7 +97,12 @@ class Movies extends Component {
             <Link to="/movies/new" className="btn btn-primary mt-5 mb-2">
               New Movie
             </Link>
-            <p className="h4">Showing {count} movies in the database</p>
+            <p className="h4">
+              {count
+                ? `Showing ${count} movies in the database`
+                : "There are no movies in the database!"}
+            </p>
+            <SearchBox onChange={this.handleSearch} />
             <MoviesTable
               movies={movies}
               sortColumn={sortColumn}
